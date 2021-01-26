@@ -1,23 +1,24 @@
 import React from 'react';
+import { createMuiTheme, CssBaseline } from '@material-ui/core';
+import { ThemeProvider } from 'react-bootstrap';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from '../Home/Home';
-import store from '../Redux';
+import { BrowserRouter } from 'react-router-dom';
+import store from '../../Redux';
+import RootRouter from '../../Pages/RootRouter/RootRouter';
 
-class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </BrowserRouter>
-      </Provider>
-    );
-  }
-}
+const theme = createMuiTheme();
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <RootRouter />
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
+  );
+};
 
 export default App;
