@@ -3,9 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Layout from '../../Components/Layout/Layout';
 import { Button, Container } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../../Redux/reducers/categoriesReducer';
 import { addBook } from '../../Redux/reducers/booksReducer';
+import { adminSelector } from '../../Redux/selectors/adminSelector';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,6 +45,12 @@ const AddBook = () => {
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
+
+  const isAdminLoggedIn = useSelector(adminSelector);
+
+  if (!isAdminLoggedIn) {
+    return <Redirect to="library" />;
+  }
 
   return (
     <Layout>

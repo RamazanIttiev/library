@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import BooksList from '../../Components/BooksList/BooksList';
 import Layout from '../../Components/Layout/Layout';
 import Preloader from '../../Components/Preloader/Preloader';
+import Search from '../../Components/Search/Search';
 import { fetchBooks } from '../../Redux/reducers/booksReducer';
 import { fetchCategories } from '../../Redux/reducers/categoriesReducer';
 import { books, isPreloaderFetching } from '../../Redux/selectors/booksSelector';
@@ -29,6 +30,7 @@ class Library extends Component {
     return (
       <Layout>
         <h1 className={classes.library_title}>Ваша библиотека</h1>
+        <Search />
         <Preloader open={isFetching} />
         <BooksList books={books} />
       </Layout>

@@ -5,7 +5,7 @@ const BooksList = ({ books }) => {
   return (
     <>
       {books.length ? (
-        books.map(({ title, description, author, image, id }) => (
+        books.map(({ title, description, author, image, id, category }) => (
           <BookCard
             key={id}
             id={id}
@@ -13,6 +13,7 @@ const BooksList = ({ books }) => {
             title={title}
             image={image}
             description={description}
+            category={category}
           />
         ))
       ) : (

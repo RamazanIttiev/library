@@ -2,14 +2,15 @@ import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/too
 import API from '../../utils/fetcher';
 import { fetchCategories } from './categoriesReducer';
 import { v4 as uuidv4 } from 'uuid';
-import { getCurrentBooks } from '../selectors/booksSelector';
 
 const booksAdapter = createEntityAdapter();
 
 export const booksSelector = booksAdapter.getSelectors(state => state.books);
 
-export const fetchBooks = createAsyncThunk('books/fetchBooks', async () => {
-  const { data } = await API('/books');
+export const fetchBooks = createAsyncThunk('books/fetchBooks', async title => {
+  const { data } = await API.get('/books', {
+    params: { title: title },
+  });
   return data;
 });
 
@@ -40,10 +41,10 @@ export const addBook = createAsyncThunk(
 //   },
 // );
 
-export const deleteBook = createAsyncThunk('books/deleteBook', async id => {
-  await API.delete(`/categories/${id}`);
-  return id;
-});
+// export const deleteBook = createAsyncThunk('books/deleteBook', async id => {
+//   await API.delete(`/categories/${id}`);
+//   return id;
+// });
 
 export const booksSlice = createSlice({
   name: 'books',
@@ -58,15 +59,9 @@ export const booksSlice = createSlice({
         return state.allBooks.push(item);
       });
     },
-    [addBook.fulfilled]: (state, { payload }) => {
-      console.log(payload);
-      // payload.map(item => {
-      //   return state.allBooks.push(item);
-      // });
-    },
-    [deleteBook.fulfilled]: (state, { payload }) => {
-      booksAdapter.removeOne(state, payload.booksList);
-    },
+    // [deleteBook.fulfilled]: (state, { payload }) => {
+    //   booksAdapter.removeOne(state, payload.booksList);
+    // },
   },
 });
 
