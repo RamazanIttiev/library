@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 const API = Axios.create({
-  baseURL: 'http://localhost:3004',
+  baseURL: 'https://my-json-server.typicode.com/RamazanIttiev/RamazanIttiev-libraryDB',
   timeout: 10000,
 });
 
