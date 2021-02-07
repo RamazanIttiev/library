@@ -19,9 +19,11 @@ const styles = () => ({
 
 class Library extends Component {
   componentDidMount() {
-    const { fetchBooks, fetchCategories } = this.props;
+    const { books, fetchBooks, fetchCategories } = this.props;
     fetchCategories();
-    fetchBooks();
+    if (books.length === 0) {
+      fetchBooks();
+    }
   }
 
   render() {

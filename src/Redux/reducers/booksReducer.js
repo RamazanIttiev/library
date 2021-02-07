@@ -8,10 +8,14 @@ const booksAdapter = createEntityAdapter();
 export const booksSelector = booksAdapter.getSelectors(state => state.books);
 
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async title => {
-  const { data } = await API.get('/books', {
-    params: { title: title },
-  });
-  return data;
+  try {
+    const { data } = await API.get('/books', {
+      params: { title: title },
+    });
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 export const addBook = createAsyncThunk(
@@ -25,7 +29,7 @@ export const addBook = createAsyncThunk(
       category,
       description,
     };
-    const { data } = await API.post(`/books`, { ...newBook });
+    const { data } = await API.put(`/books`, { ...newBook });
     return data;
   },
 );
@@ -59,6 +63,14 @@ export const booksSlice = createSlice({
         return state.allBooks.push(item);
       });
     },
+    // [addBook.pending]: state => {
+    //   state.isFetching = true;
+    // },
+    // [addBook.fulfilled]: (state, { payload }) => {
+    //   state.isFetching = false;
+    //   console.log(payload);
+    //   state.allBooks.push(payload);
+    // },
     // [deleteBook.fulfilled]: (state, { payload }) => {
     //   booksAdapter.removeOne(state, payload.booksList);
     // },
